@@ -1,33 +1,18 @@
-import "./App.css";
-import Main from "./components/Main";
-import { createContext, useState } from "react";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { observer } from "mobx-react";
+import counterStore from "./CounterStore";
 
-export const ThemeContext = createContext(null);
-
-function App() {
-  const [theme, setTheme] = useState("light");
-  const toggleTheme = () => {
-    setTheme((curr) => (curr === "light" ? "dark" : "light"));
-  };
+const App = observer(() => {
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className="Theme" id={theme}>
-        <div className="slid">
-          <label>{theme === "light" ? "Light Mode" : "Dark Mode"}</label>
-      
-         <div className="form">
-
-            <label className="switch">
-              <input type="checkbox" className="switch--input" onChange={toggleTheme} />
-              <span className="switch--slider"></span>
-            </label>      
-  
-         </div>
-        </div>
-        <Main/>
-      </div>
-    </ThemeContext.Provider>
+    <div>
+      <h1>Counter</h1>
+      <p>Count: {counterStore.count}</p>
+      <button onClick={() => counterStore.increment()}>Increment</button>
+      <button onClick={() => counterStore.decrement()}>Decrement</button>
+    </div>
   );
-}
+});
 
-export default App;
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);

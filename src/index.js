@@ -1,20 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
- 
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { observer } from "mobx-react";
+import counterStore from "./CounterStore";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-    
-  </React.StrictMode>
-);
+const App = observer(() => {
+  return (
+    <div>
+      <h1>Counter</h1>
+      <p>Count: {counterStore.count}</p>
+      <button onClick={() => counterStore.increment()}>Increment</button>
+      <button onClick={() => counterStore.decrement()}>Decrement</button>
+    </div>
+  );
+});
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
-
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
